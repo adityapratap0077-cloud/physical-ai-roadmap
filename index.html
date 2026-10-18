@@ -6,518 +6,456 @@
 <title>Zero to Robots: A Beginner Walkthrough</title>
 <meta name="description" content="A step-by-step walkthrough that takes you from zero AI knowledge to building AI-powered robots. Every step tells you exactly what to click, install, and type.">
 <style>
-/* ============ LUMINOUS DESIGN TOKENS (same runtime) ============ */
+/* Workbook print aesthetic. No gradients, no glows, no glass. */
 :root{
-  --bg:#07080d; --bg2:#0b0d16; --panel:rgba(255,255,255,.028);
-  --panel-br:rgba(255,255,255,.09);
-  --ink:#eef1ff; --ink-dim:rgba(238,241,255,.62); --ink-faint:rgba(238,241,255,.38);
-  --blue:#38e1ff; --violet:#a78bfa; --green:#4ade80; --amber:#fbbf24; --pink:#f472b6;
-  --glow-b:0 0 24px rgba(56,225,255,.35),0 0 64px rgba(56,225,255,.12);
-  --r:18px;
-  --font:"Inter","SF Pro Display","Segoe UI",system-ui,-apple-system,sans-serif;
-  --mono:"JetBrains Mono","SFMono-Regular",Consolas,"Courier New",monospace;
+  --paper:#faf6ed;
+  --paper2:#f3eee1;
+  --ink:#211d16;
+  --muted:#6f675a;
+  --faint:#a39a88;
+  --line:#ddd3bf;
+  --green:#2e6b3e;
+  --green-soft:#e7efe4;
+  --red:#a83a26;
+  --serif:Georgia,"Times New Roman",Times,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden}
-::selection{background:rgba(56,225,255,.3)}
-.bg-fx{position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:
-   radial-gradient(900px 480px at 12% -6%,rgba(56,225,255,.07),transparent 60%),
-   radial-gradient(800px 480px at 88% 8%,rgba(167,139,250,.08),transparent 60%),
-   radial-gradient(700px 700px at 50% 110%,rgba(74,222,128,.05),transparent 60%),
-   var(--bg);}
-.grid-fx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
-  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 100%);}
-a{color:var(--blue);text-decoration:none;border-bottom:1px dotted rgba(56,225,255,.5)}
-a:hover{border-bottom-style:solid}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:#d9e8d2}
+a{color:#1d4fd7;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:#123aa5}
 
-/* ============ PROGRESS HEADER ============ */
-.pbar{position:sticky;top:0;z-index:50;background:rgba(7,8,13,.86);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--panel-br)}
-.pbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
-.pbar-title{font-weight:800;font-size:15px;letter-spacing:.4px;white-space:nowrap}
-.pbar-title .dot{color:var(--blue)}
-.pbar-track{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
-.pbar-fill{height:100%;width:0%;border-radius:99px;
-  background:linear-gradient(90deg,var(--blue),var(--violet),var(--green));
-  box-shadow:var(--glow-b);transition:width .5s ease}
-.pbar-label{font-size:13px;color:var(--ink-dim);white-space:nowrap;font-variant-numeric:tabular-nums}
+/* thin progress rule */
+.progress{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.progress .bar{height:4px;background:var(--green);width:0%;transition:width .4s ease}
+.progress .row{max-width:700px;margin:0 auto;padding:8px 22px;display:flex;
+  justify-content:space-between;font-size:13px;color:var(--muted)}
+.progress .row b{color:var(--ink)}
 
-/* ============ HERO ============ */
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-.hero{padding:64px 0 30px;text-align:center}
-.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
-  color:var(--blue);border:1px solid rgba(56,225,255,.35);border-radius:99px;
-  padding:7px 18px;margin-bottom:22px;background:rgba(56,225,255,.06)}
-.hero h1{font-size:clamp(38px,7vw,68px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:18px}
-.hero h1 .grad{background:linear-gradient(92deg,var(--blue),var(--violet) 55%,var(--green));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{font-size:clamp(16px,2.4vw,20px);color:var(--ink-dim);max-width:640px;margin:0 auto 30px}
-.needbox{background:var(--panel);border:1px solid var(--panel-br);border-radius:var(--r);
-  padding:22px 24px;max-width:640px;margin:0 auto 30px;text-align:left}
-.needbox h3{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px}
-.needbox ul{list-style:none;display:grid;gap:8px}
-.needbox li{font-size:15px;color:var(--ink-dim);padding-left:28px;position:relative}
-.needbox li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:800}
-.needbox li b{color:var(--ink)}
-.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;font-weight:800;font-size:16px;padding:14px 34px;border-radius:14px;
-  border:1px solid rgba(56,225,255,.4);color:#04121a;cursor:pointer;
-  background:linear-gradient(120deg,var(--blue),#7dd3fc);box-shadow:var(--glow-b);transition:transform .15s}
-.btn:hover{transform:translateY(-2px)}
-.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--panel-br);box-shadow:none}
+.page{max-width:700px;margin:0 auto;padding:0 22px}
 
-/* ============ STEP CHIPS ============ */
-.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:34px 0 10px}
-.chip{display:flex;align-items:center;gap:9px;padding:9px 16px 9px 10px;border-radius:99px;
-  background:var(--panel);border:1px solid var(--panel-br);color:var(--ink-dim);
-  font-size:13.5px;font-weight:600;cursor:pointer;transition:all .2s}
-.chip:hover{border-color:rgba(56,225,255,.5);color:var(--ink);transform:translateY(-1px)}
-.chip .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-  font-size:12.5px;font-weight:800;background:rgba(255,255,255,.08);color:var(--ink)}
-.chip.done{border-color:rgba(74,222,128,.55);color:var(--ink)}
-.chip.done .n{background:var(--green);color:#04140a}
+/* masthead */
+.masthead{padding:64px 0 8px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.masthead .kind{font-size:13px;color:var(--muted);margin-bottom:14px}
+.masthead h1{font-family:var(--serif);font-weight:700;font-size:clamp(40px,9vw,64px);
+  line-height:1.05;letter-spacing:-.5px;margin-bottom:18px}
+.masthead .lede{font-size:19px;color:var(--muted);max-width:34em;margin-bottom:8px}
+.masthead .lede b{color:var(--ink)}
 
-/* ============ STEP SECTIONS ============ */
-.step{scroll-margin-top:84px;margin:46px 0;background:var(--panel);
-  border:1px solid var(--panel-br);border-radius:22px;overflow:hidden}
-.step-head{padding:30px 30px 22px;border-bottom:1px solid var(--panel-br);
-  background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
-.step-kicker{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.step-num{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
-  padding:6px 14px;border-radius:99px;color:#04121a;background:linear-gradient(120deg,var(--blue),#7dd3fc)}
-.step-time{font-size:13px;color:var(--ink-faint);font-weight:600}
-.step-time b{color:var(--amber);font-weight:700}
-.step-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
-.step-head .what{font-size:16.5px;color:var(--ink-dim);max-width:640px}
-.step-body{padding:26px 30px 30px}
-.block{margin-bottom:26px}
-.block:last-child{margin-bottom:0}
-.block h3{font-size:13px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
-  color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.block h3::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(56,225,255,.3),transparent)}
-.gloss{display:grid;gap:10px}
-.gloss div{background:rgba(255,255,255,.025);border:1px solid var(--panel-br);
-  border-radius:12px;padding:12px 16px;font-size:14.5px;color:var(--ink-dim)}
-.gloss b{color:var(--violet);font-weight:700;margin-right:6px}
-.moves{list-style:none;display:grid;gap:12px;counter-reset:mv}
-.moves li{position:relative;padding:14px 16px 14px 58px;background:rgba(255,255,255,.022);
-  border:1px solid var(--panel-br);border-radius:14px;font-size:15px;color:var(--ink-dim)}
-.moves li b{color:var(--ink)}
-.moves li::before{counter-increment:mv;content:counter(mv);position:absolute;left:16px;top:14px;
-  width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
-  font-size:13px;font-weight:800;color:#04121a;background:linear-gradient(120deg,var(--blue),#7dd3fc)}
-.moves .tip{margin-top:8px;font-size:13.5px;color:var(--ink-faint);display:block}
-code{font-family:var(--mono);font-size:.88em;background:rgba(56,225,255,.09);
-  border:1px solid rgba(56,225,255,.2);border-radius:7px;padding:2px 8px;color:#bff3ff;
-  word-break:break-word}
-pre{background:#0a0c14;border:1px solid var(--panel-br);border-radius:12px;
-  padding:16px 18px;overflow-x:auto;margin-top:10px;font-family:var(--mono);
-  font-size:13.5px;line-height:1.7;color:#c9f6ff}
-pre .cm{color:rgba(238,241,255,.35)}
-.done-list{list-style:none;display:grid;gap:10px}
-.done-list li{display:flex;gap:14px;align-items:flex-start;background:rgba(74,222,128,.05);
-  border:1px solid rgba(74,222,128,.22);border-radius:12px;padding:13px 16px;cursor:pointer;
-  font-size:15px;color:var(--ink-dim);transition:all .2s}
-.done-list li:hover{border-color:rgba(74,222,128,.5)}
-.done-list li.checked{color:var(--ink-faint);text-decoration:line-through}
-.done-list input{appearance:none;-webkit-appearance:none;width:22px;height:22px;flex:none;margin-top:2px;
-  border-radius:7px;border:2px solid rgba(74,222,128,.5);background:transparent;cursor:pointer;
-  display:grid;place-items:center;transition:all .2s}
-.done-list input:checked{background:var(--green);border-color:var(--green)}
-.done-list input:checked::after{content:"✓";color:#04140a;font-weight:900;font-size:14px}
-.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.meta{font-size:13px;font-weight:700;padding:8px 16px;border-radius:99px;
-  background:rgba(255,255,255,.05);border:1px solid var(--panel-br);color:var(--ink-dim)}
-.meta b{color:var(--ink)}
-.step-nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
-.sbtn{font-weight:700;font-size:14.5px;padding:12px 24px;border-radius:12px;cursor:pointer;
-  background:rgba(255,255,255,.05);border:1px solid var(--panel-br);color:var(--ink);transition:all .2s}
-.sbtn:hover{border-color:rgba(56,225,255,.5);transform:translateY(-1px)}
-.sbtn.primary{background:linear-gradient(120deg,var(--blue),#7dd3fc);color:#04121a;border:none}
+/* contents */
+.toc{padding:26px 0;border-bottom:1px solid var(--line)}
+.toc h2,.sec-label{font-family:var(--serif);font-size:22px;margin-bottom:14px}
+.toc ol{list-style:none;counter-reset:ch}
+.toc li{counter-increment:ch;border-top:1px solid var(--line)}
+.toc li:last-child{border-bottom:1px solid var(--line)}
+.toc a{display:flex;gap:16px;align-items:baseline;padding:13px 4px;color:var(--ink);text-decoration:none}
+.toc a:hover{background:var(--paper2)}
+.toc a::before{content:counter(ch,decimal-leading-zero);font-family:var(--serif);
+  font-size:15px;color:var(--faint);min-width:2ch}
+.toc .t{font-weight:600;font-size:17px}
+.toc .tm{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
+.toc a.done .t{color:var(--muted);text-decoration:line-through}
+.toc a.done::after{content:"✓";color:var(--green);font-weight:700}
 
-/* ============ FINALE ============ */
-.finale{text-align:center;margin:60px 0 30px;padding:50px 30px;background:var(--panel);
-  border:1px solid var(--panel-br);border-radius:22px}
-.finale h2{font-size:clamp(26px,4.5vw,40px);font-weight:900;letter-spacing:-.5px;margin-bottom:14px}
-.finale h2 .grad{background:linear-gradient(92deg,var(--green),var(--blue));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.finale p{color:var(--ink-dim);max-width:620px;margin:0 auto 18px;font-size:16px}
-footer{text-align:center;padding:26px 20px 46px;color:var(--ink-faint);font-size:13px}
-@media(max-width:640px){
-  .step-head,.step-body{padding-left:20px;padding-right:20px}
-  .moves li{padding-left:52px}
-  .pbar-title{display:none}
+/* need box */
+.need{margin:30px 0;padding:24px 26px;background:var(--paper2);border:1px solid var(--line)}
+.need h2{font-family:var(--serif);font-size:22px;margin-bottom:12px}
+.need ul{list-style:none}
+.need li{padding:7px 0 7px 26px;position:relative;color:var(--muted)}
+.need li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.need li b{color:var(--ink)}
+
+/* chapters */
+.chapter{padding:44px 0 10px;border-bottom:2px solid var(--ink);scroll-margin-top:70px}
+.chapter .num{font-family:var(--serif);font-size:15px;color:var(--faint);margin-bottom:6px}
+.chapter .num span{font-size:64px;color:var(--ink);display:block;line-height:1;margin-bottom:10px}
+.chapter h2{font-family:var(--serif);font-size:clamp(30px,6vw,42px);line-height:1.15;
+  letter-spacing:-.5px;margin-bottom:12px}
+.chapter .meta{font-size:14px;color:var(--muted);margin-bottom:14px}
+.chapter .meta b{color:var(--red)}
+.chapter .what{font-size:18px;color:var(--muted);margin-bottom:30px;max-width:36em}
+.chapter h3{font-family:var(--serif);font-size:21px;margin:30px 0 14px;
+  padding-top:22px;border-top:1px solid var(--line)}
+
+.gloss{margin-bottom:6px}
+.gloss p{padding:10px 0;border-bottom:1px dotted var(--line);font-size:16px;color:var(--muted)}
+.gloss p:last-child{border-bottom:none}
+.gloss b{color:var(--ink);font-weight:700}
+.gloss b::after{content:" · ";font-weight:400;color:var(--faint)}
+
+.moves{list-style:none;counter-reset:mv}
+.moves li{counter-increment:mv;position:relative;padding:0 0 20px 52px}
+.moves li::before{content:counter(mv);position:absolute;left:0;top:2px;
+  width:34px;height:34px;border:1.5px solid var(--ink);border-radius:50%;
+  display:grid;place-items:center;font-family:var(--serif);font-size:16px;font-weight:700}
+.moves li p{color:#3d382e}
+.moves li p b{color:var(--ink)}
+.note{display:block;margin-top:8px;font-size:14.5px;color:var(--muted);
+  border-left:3px solid var(--line);padding:6px 0 6px 14px;font-style:italic}
+
+code{font-family:var(--mono);font-size:.85em;background:var(--paper2);
+  border:1px solid var(--line);border-radius:4px;padding:1px 7px;white-space:nowrap}
+pre{background:#fffdf8;border:1px solid var(--line);border-radius:6px;
+  padding:16px 18px;overflow-x:auto;margin:12px 0;font-family:var(--mono);
+  font-size:14px;line-height:1.75;color:var(--ink)}
+pre .cm{color:var(--faint);font-style:italic}
+
+.done{list-style:none;margin:6px 0 8px}
+.done li{display:flex;gap:14px;align-items:flex-start;padding:12px 14px;
+  border:1px solid var(--line);border-radius:6px;margin-bottom:10px;cursor:pointer;
+  background:#fffdf8}
+.done li:hover{border-color:var(--green)}
+.done input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin-top:3px;
+  border:1.5px solid var(--green);border-radius:4px;background:#fff;cursor:pointer;
+  display:grid;place-items:center}
+.done input:checked{background:var(--green)}
+.done input:checked::after{content:"✓";color:#fff;font-weight:700;font-size:14px}
+.done li.checked span{color:var(--faint);text-decoration:line-through}
+.done span{font-size:16px}
+
+.levelup{margin:18px 0;padding:14px 18px;background:var(--green-soft);
+  border:1px solid #c4d6bb;border-radius:6px;font-size:15.5px}
+.levelup b{font-weight:700}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin:34px 0 8px;flex-wrap:wrap}
+.nav a{font-family:var(--serif);font-size:17px;color:var(--ink);text-decoration:none;
+  border:1.5px solid var(--ink);border-radius:6px;padding:10px 20px}
+.nav a:hover{background:var(--ink);color:var(--paper)}
+.nav a.next{background:var(--ink);color:var(--paper)}
+.nav a.next:hover{background:#000}
+
+/* finale */
+.finale{padding:60px 0;text-align:left}
+.finale h2{font-family:var(--serif);font-size:clamp(30px,6vw,44px);margin-bottom:16px;letter-spacing:-.5px}
+.finale p{color:var(--muted);font-size:18px;max-width:36em;margin-bottom:14px}
+.finale a.top{font-family:var(--serif)}
+
+.colophon{border-top:2px solid var(--ink);margin-top:20px;padding:22px 0 60px;
+  font-size:13.5px;color:var(--faint);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  .masthead{padding-top:44px}
+  .toc .tm{display:none}
+  .moves li{padding-left:46px}
 }
 </style>
 </head>
 <body>
-<div class="bg-fx"></div><div class="grid-fx"></div>
 
-<div class="pbar">
-  <div class="pbar-in">
-    <div class="pbar-title"><span class="dot">●</span> ZERO TO ROBOTS</div>
-    <div class="pbar-track"><div class="pbar-fill" id="pfill"></div></div>
-    <div class="pbar-label" id="plabel">0 of 0 tasks done</div>
-  </div>
+<div class="progress">
+  <div class="bar" id="bar"></div>
+  <div class="row"><span>Zero to Robots</span><span><b id="pcount">0</b> of <span id="ptotal">0</span> tasks done</span></div>
 </div>
 
-<div class="wrap">
+<div class="page">
 
-  <header class="hero">
-    <div class="kicker">A beginner walkthrough</div>
-    <h1>Zero to <span class="grad">Robots</span></h1>
-    <p class="lead">Six steps. Each one tells you exactly what to click, install, and type. No AI knowledge needed. No experience needed. By the end, you will have trained AI and driven robots yourself.</p>
-    <div class="needbox">
-      <h3>Before you start, you need</h3>
-      <ul>
-        <li><b>A computer.</b> Any laptop works. Windows, Mac, or Linux.</li>
-        <li><b>Internet.</b> Most steps run in your browser, nothing to install.</li>
-        <li><b>A Google account.</b> For the free tools in steps 2, 3, and 5.</li>
-        <li><b>Zero experience.</b> Every new word is explained the first time you meet it.</li>
-        <li><b>Zero money.</b> Every step in this walkthrough is free.</li>
-      </ul>
-    </div>
-    <div class="cta-row">
-      <button class="btn" onclick="go('step1')">Start Step 1 ↓</button>
-    </div>
-    <div class="chips" id="chips"></div>
+  <header class="masthead">
+    <div class="kind">A beginner&rsquo;s walkthrough &middot; read it like a workbook, do it like a checklist</div>
+    <h1>Zero to Robots</h1>
+    <p class="lede">Six steps, in order. Each one tells you <b>exactly what to click, install, and type</b>. No AI knowledge needed. No experience needed. By the end, you will have trained AI and driven robots yourself.</p>
   </header>
 
-  <!-- ================= STEP 1 ================= -->
-  <section class="step" id="step1" data-step="1" data-title="Code by talking to AI">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 1</span><span class="step-time">Takes about <b>1 hour</b> · Free</span></div>
-      <h2>Write code by talking to AI</h2>
-      <p class="what">You will make the computer do things by describing them in plain English. The AI writes the code. You just run it and watch.</p>
-    </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>Prompt</b>What you type to the AI. Like giving instructions to a very fast assistant.</div>
-          <div><b>Code editor</b>The app where code lives. Think of it as a notebook that can run what you write.</div>
-          <div><b>Run</b>Making the code actually do its thing, instead of just sitting there as text.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>Go to <a href="https://cursor.com" target="_blank" rel="noopener">cursor.com</a> and download Cursor. Install it like any normal app, then open it.</li>
-          <li>Click <b>New File</b>, then save it as <code>hello.py</code>. The <code>.py</code> ending means this file speaks Python, the language we will use everywhere.</li>
-          <li>Press <code>Ctrl+K</code> (or <code>Cmd+K</code> on Mac). A small box appears. Type: <code>print my name 5 times</code>, but write your real name. Press Enter and let the AI write the code.</li>
-          <li>Now run it. Open the terminal inside Cursor (<b>Terminal</b> menu, then <b>New Terminal</b>) and type <code>python hello.py</code>, then press Enter. You should see your name printed 5 times.<span class="tip">If it says python is not found, install Python from python.org first, then try again.</span></li>
-          <li>Do it once more, but harder. Press <code>Ctrl+K</code> again and type: <code>ask for my name, then greet me by name</code>. Run it. Talk to your own program.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s1a"><span>You made the computer print your name 5 times</span></li>
-          <li><input type="checkbox" data-id="s1b"><span>You made a program that asks for a name and greets the person</span></li>
-          <li><input type="checkbox" data-id="s1c"><span>You changed a prompt and saw the code change with it</span></li>
-        </ul>
-      </div>
-      <div class="step-nav">
-        <span></span>
-        <button class="sbtn primary" onclick="go('step2')">Next: teach your computer to see →</button>
-      </div>
-    </div>
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol id="toclist">
+      <li><a href="#step1" data-step="1"><span class="t">Write code by talking to AI</span><span class="tm">about 1 hour</span></a></li>
+      <li><a href="#step2" data-step="2"><span class="t">Teach your computer to see</span><span class="tm">about 2 hours</span></a></li>
+      <li><a href="#step3" data-step="3"><span class="t">Train your own AI</span><span class="tm">about 1 hour, no code</span></a></li>
+      <li><a href="#step4" data-step="4"><span class="t">Learn robot software</span><span class="tm">a weekend</span></a></li>
+      <li><a href="#step5" data-step="5"><span class="t">Give AI a brain that plans</span><span class="tm">about 2 hours</span></a></li>
+      <li><a href="#step6" data-step="6"><span class="t">Put AI on a robot</span><span class="tm">a weekend</span></a></li>
+    </ol>
+  </nav>
+
+  <section class="need">
+    <h2>Before you start</h2>
+    <ul>
+      <li><b>A computer.</b> Any laptop works. Windows, Mac, or Linux.</li>
+      <li><b>Internet.</b> Most steps run in your browser, nothing to install.</li>
+      <li><b>A Google account.</b> For the free tools in steps 2, 3, and 5.</li>
+      <li><b>Zero experience.</b> Every new word is explained the first time you meet it.</li>
+      <li><b>Zero money.</b> Every step in this walkthrough is free.</li>
+    </ul>
   </section>
 
-  <!-- ================= STEP 2 ================= -->
-  <section class="step" id="step2" data-step="2" data-title="Teach your computer to see">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 2</span><span class="step-time">Takes about <b>2 hours</b> · Free · Runs in your browser</span></div>
-      <h2>Teach your computer to see</h2>
-      <p class="what">You will point an AI at a photo and watch it name everything in it. This is exactly how robots see the world.</p>
+  <!-- ============ STEP 1 ============ -->
+  <section class="chapter" id="step1" data-step="1">
+    <div class="num"><span>1</span>Step one</div>
+    <h2>Write code by talking to AI</h2>
+    <div class="meta">Takes about 1 hour &middot; free</div>
+    <p class="what">You will make the computer do things by describing them in plain English. The AI writes the code. You just run it and watch.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>Prompt</b>what you type to the AI. Like giving instructions to a very fast assistant.</p>
+      <p><b>Code editor</b>the app where code lives. Think of it as a notebook that can run what you write.</p>
+      <p><b>Run</b>making the code actually do its thing, instead of just sitting there as text.</p>
     </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>Model</b>A file that already learned to recognize things. You download it, you do not build it.</div>
-          <div><b>Detection</b>Drawing boxes around objects in a photo and naming each one.</div>
-          <div><b>Pixel</b>One tiny dot of color. A photo is just a grid of millions of them.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>Go to <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>, sign in with Google, and click <b>New notebook</b>. This is a free computer in your browser. Nothing to install.</li>
-          <li>In the first box, type <code>!pip install ultralytics</code> and press <code>Shift+Enter</code> to run it. Wait until it finishes. Installing takes a few minutes the first time, that is normal.</li>
-          <li>Click <b>+ Code</b> to add a new box, paste this in, and run it with <code>Shift+Enter</code>:
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>Go to <a href="https://cursor.com" target="_blank" rel="noopener">cursor.com</a> and download Cursor. Install it like any normal app, then open it.</p></li>
+      <li><p>Click <b>New File</b>, then save it as <code>hello.py</code>. The <code>.py</code> ending means this file speaks Python, the language we will use everywhere.</p></li>
+      <li><p>Press <code>Ctrl+K</code> (or <code>Cmd+K</code> on Mac). A small box appears. Type <code>print my name 5 times</code>, but write your real name. Press Enter and let the AI write the code.</p></li>
+      <li><p>Now run it. Open the terminal inside Cursor (<b>Terminal</b> menu, then <b>New Terminal</b>) and type <code>python hello.py</code>, then press Enter. You should see your name printed 5 times.<span class="note">If it says python is not found, install Python from python.org first, then try again.</span></p></li>
+      <li><p>Do it once more, but harder. Press <code>Ctrl+K</code> again and type <code>ask for my name, then greet me by name</code>. Run it. Talk to your own program.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s1a"><span>You made the computer print your name 5 times</span></li>
+      <li><input type="checkbox" data-id="s1b"><span>You made a program that asks for a name and greets the person</span></li>
+      <li><input type="checkbox" data-id="s1c"><span>You changed a prompt and saw the code change with it</span></li>
+    </ul>
+
+    <div class="nav"><span></span><a class="next" href="#step2">Next: teach your computer to see &rarr;</a></div>
+  </section>
+
+  <!-- ============ STEP 2 ============ -->
+  <section class="chapter" id="step2" data-step="2">
+    <div class="num"><span>2</span>Step two</div>
+    <h2>Teach your computer to see</h2>
+    <div class="meta">Takes about 2 hours &middot; free &middot; runs in your browser</div>
+    <p class="what">You will point an AI at a photo and watch it name everything in it. This is exactly how robots see the world.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>Model</b>a file that already learned to recognize things. You download it, you do not build it.</p>
+      <p><b>Detection</b>drawing boxes around objects in a photo and naming each one.</p>
+      <p><b>Pixel</b>one tiny dot of color. A photo is just a grid of millions of them.</p>
+    </div>
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>Go to <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>, sign in with Google, and click <b>New notebook</b>. This is a free computer in your browser. Nothing to install.</p></li>
+      <li><p>In the first box, type <code>!pip install ultralytics</code> and press <code>Shift+Enter</code> to run it. Wait until it finishes. Installing takes a few minutes the first time. That is normal.</p></li>
+      <li><p>Click <b>+ Code</b> to add a new box, paste this in, and run it with <code>Shift+Enter</code>:</p>
 <pre><span class="cm"># Load an AI model that already knows what everyday objects look like</span>
 from ultralytics import YOLO
 model = YOLO("yolo11n.pt")
 
 <span class="cm"># Point it at a photo and save the result</span>
 results = model("https://ultralytics.com/images/bus.jpg")
-results[0].save()</pre>
-          </li>
-          <li>Click the <b>folder icon</b> on the left side. Open <code>runs</code>, then <code>detect</code>, then the newest <code>predict</code> folder. Double-click the image. You will see boxes drawn around the people and the bus, with names on each box. The AI saw the photo.</li>
-          <li>Now try your own photo. Click the <b>upload button</b> at the top of that same folder panel and upload any photo from your phone. Then change the web address in your code to your file name, like <code>model("my-photo.jpg")</code>, and run it again. Check what the AI finds in your photo.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s2a"><span>You saw boxes and labels on the sample bus photo</span></li>
-          <li><input type="checkbox" data-id="s2b"><span>You uploaded your own photo and the AI labeled things in it</span></li>
-          <li><input type="checkbox" data-id="s2c"><span>You can explain what a model is, in your own words</span></li>
-        </ul>
-      </div>
-      <div class="step-nav">
-        <button class="sbtn" onclick="go('step1')">← Back to Step 1</button>
-        <button class="sbtn primary" onclick="go('step3')">Next: train your own AI →</button>
-      </div>
-    </div>
+results[0].save()</pre></li>
+      <li><p>Click the <b>folder icon</b> on the left side. Open <code>runs</code>, then <code>detect</code>, then the newest <code>predict</code> folder. Double-click the image. You will see boxes drawn around the people and the bus, with names on each box. The AI saw the photo.</p></li>
+      <li><p>Now try your own photo. Click the <b>upload button</b> at the top of that same folder panel and upload any photo from your phone. Then change the web address in your code to your file name, like <code>model("my-photo.jpg")</code>, and run it again. Check what the AI finds in your photo.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s2a"><span>You saw boxes and labels on the sample bus photo</span></li>
+      <li><input type="checkbox" data-id="s2b"><span>You uploaded your own photo and the AI labeled things in it</span></li>
+      <li><input type="checkbox" data-id="s2c"><span>You can explain what a model is, in your own words</span></li>
+    </ul>
+
+    <div class="nav"><a href="#step1">&larr; Back: code by talking to AI</a><a class="next" href="#step3">Next: train your own AI &rarr;</a></div>
   </section>
 
-  <!-- ================= STEP 3 ================= -->
-  <section class="step" id="step3" data-step="3" data-title="Train your own AI">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 3</span><span class="step-time">Takes about <b>1 hour</b> · Free · No code at all</span></div>
-      <h2>Train your own AI</h2>
-      <p class="what">Ready-made models recognize common things. Now you will teach a model something only you can teach it: your own hand gestures. Zero code needed.</p>
+  <!-- ============ STEP 3 ============ -->
+  <section class="chapter" id="step3" data-step="3">
+    <div class="num"><span>3</span>Step three</div>
+    <h2>Train your own AI</h2>
+    <div class="meta">Takes about 1 hour &middot; free &middot; no code at all</div>
+    <p class="what">Ready-made models recognize common things. Now you will teach a model something only you can teach it: your own hand gestures. Zero code needed.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>Training</b>showing the AI many examples until it learns the pattern by itself.</p>
+      <p><b>Class</b>one category you invent, like &ldquo;thumbs up&rdquo;. You will make two.</p>
+      <p><b>Dataset</b>your pile of examples. More varied examples means a smarter model.</p>
     </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>Training</b>Showing the AI many examples until it learns the pattern by itself.</div>
-          <div><b>Class</b>One category you invent, like "thumbs up". You will make two.</div>
-          <div><b>Dataset</b>Your pile of examples. More varied examples means a smarter model.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>Go to <a href="https://teachablemachine.withgoogle.com" target="_blank" rel="noopener">teachablemachine.withgoogle.com</a>, click <b>Get Started</b>, then choose <b>Image Project</b>.</li>
-          <li>Rename <b>Class 1</b> to <code>thumbs up</code> and <b>Class 2</b> to <code>thumbs down</code>.</li>
-          <li>Under "thumbs up", click <b>Webcam</b>, allow camera access, then hold the record button. Show lots of thumbs up: move your hand around, tilt it, change the distance. Aim for a few hundred pictures. It goes fast. Then do the same for "thumbs down".<span class="tip">Variety matters more than quantity. Different angles and lighting teach it better.</span></li>
-          <li>Click <b>Train Model</b>. Wait about 30 seconds while it learns.</li>
-          <li>Test it on the right side of the screen. Give a thumbs up, then a thumbs down, and watch the bars move. It is reading your hand live.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s3a"><span>The preview tells your thumbs up from thumbs down correctly, most of the time</span></li>
-          <li><input type="checkbox" data-id="s3b"><span>You tried to fool it (different angle, other hand) and saw where it fails</span></li>
-          <li><input type="checkbox" data-id="s3c"><span>You can explain what training means, in your own words</span></li>
-        </ul>
-        <div class="meta-row"><span class="meta">Level up: click <b>Export Model</b> on the site. It gives you code to use your model in a real webpage.</span></div>
-      </div>
-      <div class="step-nav">
-        <button class="sbtn" onclick="go('step2')">← Back to Step 2</button>
-        <button class="sbtn primary" onclick="go('step4')">Next: learn robot software →</button>
-      </div>
-    </div>
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>Go to <a href="https://teachablemachine.withgoogle.com" target="_blank" rel="noopener">teachablemachine.withgoogle.com</a>, click <b>Get Started</b>, then choose <b>Image Project</b>.</p></li>
+      <li><p>Rename <b>Class 1</b> to <code>thumbs up</code> and <b>Class 2</b> to <code>thumbs down</code>.</p></li>
+      <li><p>Under &ldquo;thumbs up&rdquo;, click <b>Webcam</b>, allow camera access, then hold the record button. Show lots of thumbs up: move your hand around, tilt it, change the distance. Aim for a few hundred pictures. It goes fast. Then do the same for &ldquo;thumbs down&rdquo;.<span class="note">Variety matters more than quantity. Different angles and lighting teach it better.</span></p></li>
+      <li><p>Click <b>Train Model</b>. Wait about 30 seconds while it learns.</p></li>
+      <li><p>Test it on the right side of the screen. Give a thumbs up, then a thumbs down, and watch the bars move. It is reading your hand live.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s3a"><span>The preview tells your thumbs up from thumbs down correctly, most of the time</span></li>
+      <li><input type="checkbox" data-id="s3b"><span>You tried to fool it (different angle, other hand) and saw where it fails</span></li>
+      <li><input type="checkbox" data-id="s3c"><span>You can explain what training means, in your own words</span></li>
+    </ul>
+
+    <div class="levelup"><b>Level up:</b> click Export Model on the site. It gives you code to use your model in a real webpage.</div>
+
+    <div class="nav"><a href="#step2">&larr; Back: teach your computer to see</a><a class="next" href="#step4">Next: learn robot software &rarr;</a></div>
   </section>
 
-  <!-- ================= STEP 4 ================= -->
-  <section class="step" id="step4" data-step="4" data-title="Learn robot software">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 4</span><span class="step-time">Takes <b>a weekend</b> · Free · The hardest setup in this walkthrough</span></div>
-      <h2>Learn robot software</h2>
-      <p class="what">Real robots run on software called ROS 2. You will install it and drive a virtual robot with your keyboard. No real robot needed.</p>
+  <!-- ============ STEP 4 ============ -->
+  <section class="chapter" id="step4" data-step="4">
+    <div class="num"><span>4</span>Step four</div>
+    <h2>Learn robot software</h2>
+    <div class="meta">Takes <b>a weekend</b> &middot; free &middot; the hardest setup in this walkthrough</div>
+    <p class="what">Real robots run on software called ROS 2. You will install it and drive a virtual robot with your keyboard. No real robot needed.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>ROS 2</b>the free software most real robots run. Think of it as the robot&rsquo;s operating system.</p>
+      <p><b>Node</b>one small program. A robot is a team of nodes working together: one sees, one moves, one decides.</p>
+      <p><b>Topic</b>the channel nodes use to talk to each other. Like a group chat for programs.</p>
+      <p><b>Simulation</b>a fake 3D world where you practice with robots safely and for free.</p>
     </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>ROS 2</b>The free software most real robots run. Think of it as the robot's operating system.</div>
-          <div><b>Node</b>One small program. A robot is a team of nodes working together: one sees, one moves, one decides.</div>
-          <div><b>Topic</b>The channel nodes use to talk to each other. Like a group chat for programs.</div>
-          <div><b>Simulation</b>A fake 3D world where you practice with robots safely and for free.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>ROS 2 needs Ubuntu Linux. If you use Windows or Mac, install Ubuntu inside a free virtual machine (VirtualBox) or as a dual boot. This one-time setup is the longest part of the step. Give it an afternoon.<span class="tip">This is the only step with real setup pain. Every step after this is smooth again.</span></li>
-          <li>Follow the <a href="http://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Install-Binary.html" target="_blank" rel="noopener">official ROS 2 Jazzy install guide</a>. Go slowly, one command at a time.</li>
-          <li>Test that it works. Open <b>two</b> terminals. In the first one, run:
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>ROS 2 needs Ubuntu Linux. If you use Windows or Mac, install Ubuntu inside a free virtual machine (VirtualBox) or as a dual boot. This one-time setup is the longest part of the step. Give it an afternoon.<span class="note">This is the only step with real setup pain. Every step after this is smooth again.</span></p></li>
+      <li><p>Follow the <a href="http://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Install-Binary.html" target="_blank" rel="noopener">official ROS 2 Jazzy install guide</a>. Go slowly, one command at a time.</p></li>
+      <li><p>Test that it works. Open <b>two</b> terminals. In the first one, run:</p>
 <pre>source /opt/ros/jazzy/setup.bash
 ros2 run demo_nodes_cpp talker</pre>
-In the second one, run:
+      <p>In the second one, run:</p>
 <pre>source /opt/ros/jazzy/setup.bash
 ros2 run demo_nodes_py listener</pre>
-You should see the listener printing everything the talker says. Two programs, talking through ROS 2. That means your robot software works.</li>
-          <li>Now the fun part. Install the simulator with <code>sudo apt install ros-jazzy-ros-gz</code>, open it with <code>gz sim</code>, and work through the official beginner tutorials to drive a simulated robot with your keyboard.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s4a"><span>The talker and listener talked to each other in your two terminals</span></li>
-          <li><input type="checkbox" data-id="s4b"><span>You opened the simulator and moved a virtual robot with your keyboard</span></li>
-          <li><input type="checkbox" data-id="s4c"><span>You can explain what a node and a topic are, in your own words</span></li>
-        </ul>
-      </div>
-      <div class="step-nav">
-        <button class="sbtn" onclick="go('step3')">← Back to Step 3</button>
-        <button class="sbtn primary" onclick="go('step5')">Next: give AI a planning brain →</button>
-      </div>
-    </div>
+      <p>You should see the listener printing everything the talker says. Two programs, talking through ROS 2. That means your robot software works.</p></li>
+      <li><p>Now the fun part. Install the simulator with <code>sudo apt install ros-jazzy-ros-gz</code>, open it with <code>gz sim</code>, and work through the official beginner tutorials to drive a simulated robot with your keyboard.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s4a"><span>The talker and listener talked to each other in your two terminals</span></li>
+      <li><input type="checkbox" data-id="s4b"><span>You opened the simulator and moved a virtual robot with your keyboard</span></li>
+      <li><input type="checkbox" data-id="s4c"><span>You can explain what a node and a topic are, in your own words</span></li>
+    </ul>
+
+    <div class="nav"><a href="#step3">&larr; Back: train your own AI</a><a class="next" href="#step5">Next: give AI a planning brain &rarr;</a></div>
   </section>
 
-  <!-- ================= STEP 5 ================= -->
-  <section class="step" id="step5" data-step="5" data-title="Give AI a planning brain">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 5</span><span class="step-time">Takes about <b>2 hours</b> · Free · Runs in your browser</span></div>
-      <h2>Give AI a brain that plans</h2>
-      <p class="what">A chatbot answers one question. An agent breaks a goal into steps and works through them. You will connect an AI brain to your own code and watch it plan.</p>
+  <!-- ============ STEP 5 ============ -->
+  <section class="chapter" id="step5" data-step="5">
+    <div class="num"><span>5</span>Step five</div>
+    <h2>Give AI a brain that plans</h2>
+    <div class="meta">Takes about 2 hours &middot; free &middot; runs in your browser</div>
+    <p class="what">A chatbot answers one question. An agent breaks a goal into steps and works through them. You will connect an AI brain to your own code and watch it plan.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>Agent</b>AI that plans and acts toward a goal, not just chats.</p>
+      <p><b>API key</b>a password that lets your code use Google&rsquo;s AI. Free to get, keep it private.</p>
+      <p><b>Tool</b>something an agent can use to get things done, like a calculator or web search.</p>
     </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>Agent</b>AI that plans and acts toward a goal, not just chats.</div>
-          <div><b>API key</b>A password that lets your code use Google's AI. Free to get, keep it private.</div>
-          <div><b>Tool</b>Something an agent can use to get things done, like a calculator or web search.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>Go to <a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a>, sign in, click <b>Get API key</b>, then <b>Create API key</b>. Copy it somewhere safe. It is free, and it works like a password, so never post it anywhere public.</li>
-          <li>Open a new notebook at <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>. Back in AI Studio, click <b>Get code</b>. It gives you a short Python snippet with your key already filled in. Paste it into your notebook and run it with <code>Shift+Enter</code>. You just called an AI brain from your own code.</li>
-          <li>Now make it plan. Add a new box and ask it for something with steps, for example: <code>Plan a 2-day trip to Jaipur under 5000 rupees. Break it into clear steps.</code> Read the plan it returns.</li>
-          <li>Now make it check itself. Ask: <code>Review your plan above. Find mistakes or missing costs, and give me a fixed version.</code> Watch it criticize and improve its own work. That plan-then-check loop is the heart of every AI agent.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s5a"><span>Your code called the AI using your own API key</span></li>
-          <li><input type="checkbox" data-id="s5b"><span>It produced a step-by-step plan for your goal</span></li>
-          <li><input type="checkbox" data-id="s5c"><span>It checked its own plan and improved it</span></li>
-        </ul>
-        <div class="meta-row"><span class="meta">Level up: libraries like <b>LangGraph</b> let agents use real tools (search, calculators, code). That is your next rabbit hole.</span></div>
-      </div>
-      <div class="step-nav">
-        <button class="sbtn" onclick="go('step4')">← Back to Step 4</button>
-        <button class="sbtn primary" onclick="go('step6')">Next: put AI on a robot →</button>
-      </div>
-    </div>
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>Go to <a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a>, sign in, click <b>Get API key</b>, then <b>Create API key</b>. Copy it somewhere safe. It is free, and it works like a password, so never post it anywhere public.</p></li>
+      <li><p>Open a new notebook at <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>. Back in AI Studio, click <b>Get code</b>. It gives you a short Python snippet with your key already filled in. Paste it into your notebook and run it with <code>Shift+Enter</code>. You just called an AI brain from your own code.</p></li>
+      <li><p>Now make it plan. Add a new box and ask it for something with steps, for example: <code>Plan a 2-day trip to Jaipur under 5000 rupees. Break it into clear steps.</code> Read the plan it returns.</p></li>
+      <li><p>Now make it check itself. Ask: <code>Review your plan above. Find mistakes or missing costs, and give me a fixed version.</code> Watch it criticize and improve its own work. That plan-then-check loop is the heart of every AI agent.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s5a"><span>Your code called the AI using your own API key</span></li>
+      <li><input type="checkbox" data-id="s5b"><span>It produced a step-by-step plan for your goal</span></li>
+      <li><input type="checkbox" data-id="s5c"><span>It checked its own plan and improved it</span></li>
+    </ul>
+
+    <div class="levelup"><b>Level up:</b> libraries like LangGraph let agents use real tools (search, calculators, code). That is your next rabbit hole.</div>
+
+    <div class="nav"><a href="#step4">&larr; Back: learn robot software</a><a class="next" href="#step6">Next: put AI on a robot &rarr;</a></div>
   </section>
 
-  <!-- ================= STEP 6 ================= -->
-  <section class="step" id="step6" data-step="6" data-title="Put AI on a robot">
-    <div class="step-head">
-      <div class="step-kicker"><span class="step-num">Step 6</span><span class="step-time">Takes <b>a weekend</b> · Free in simulation</span></div>
-      <h2>Put AI on a robot</h2>
-      <p class="what">Time to combine everything: an AI brain driving a robot body. You will train a robot arm in simulation first. Real hardware comes later, and it is optional.</p>
+  <!-- ============ STEP 6 ============ -->
+  <section class="chapter" id="step6" data-step="6">
+    <div class="num"><span>6</span>Step six</div>
+    <h2>Put AI on a robot</h2>
+    <div class="meta">Takes <b>a weekend</b> &middot; free in simulation</div>
+    <p class="what">Time to combine everything: an AI brain driving a robot body. You will train a robot arm in simulation first. Real hardware comes later, and it is optional.</p>
+
+    <h3>Words you&rsquo;ll meet</h3>
+    <div class="gloss">
+      <p><b>Policy</b>the trained AI that decides the robot&rsquo;s next move, moment by moment.</p>
+      <p><b>Imitation learning</b>the robot learns by watching demonstrations, the way you learned by watching others.</p>
+      <p><b>Sim-to-real</b>training in simulation first, then running the same AI on a real robot later.</p>
     </div>
-    <div class="step-body">
-      <div class="block">
-        <h3>First, the words</h3>
-        <div class="gloss">
-          <div><b>Policy</b>The trained AI that decides the robot's next move, moment by moment.</div>
-          <div><b>Imitation learning</b>The robot learns by watching demonstrations, the way you learned by watching others.</div>
-          <div><b>Sim-to-real</b>Training in simulation first, then running the same AI on a real robot later.</div>
-        </div>
-      </div>
-      <div class="block">
-        <h3>Your moves</h3>
-        <ol class="moves">
-          <li>Install LeRobot, the open-source toolkit for teaching robots. You need Python 3.10 or newer. Then run <code>pip install lerobot</code>. The full guide is at <a href="https://huggingface.co/docs/lerobot/installation" target="_blank" rel="noopener">huggingface.co/docs/lerobot/installation</a>.</li>
-          <li>Add a simulation world to practice in: <code>pip install "lerobot[pusht]"</code>. PushT is a classic beginner task: a simulated arm pushes a T-shaped block to a target.</li>
-          <li>Follow LeRobot's docs to train a small policy on the PushT task. Training runs on a normal CPU, slowly, or on a free Colab GPU, faster. When it finishes, watch your trained arm push the block to the target by itself.</li>
-          <li>Real hardware is optional and comes later. When you are ready, a popular DIY robot arm kit costs around $200. You record about 50 demonstrations by moving the arm yourself, train on them, and the arm repeats the task on its own.</li>
-        </ol>
-      </div>
-      <div class="block">
-        <h3>You are done when</h3>
-        <ul class="done-list">
-          <li><input type="checkbox" data-id="s6a"><span>LeRobot is installed and the PushT simulation opens</span></li>
-          <li><input type="checkbox" data-id="s6b"><span>Your trained policy moved the block to the target on its own</span></li>
-          <li><input type="checkbox" data-id="s6c"><span>You can explain imitation learning in one sentence</span></li>
-        </ul>
-      </div>
-      <div class="step-nav">
-        <button class="sbtn" onclick="go('step5')">← Back to Step 5</button>
-        <button class="sbtn primary" onclick="go('finale')">Finish ↓</button>
-      </div>
-    </div>
+
+    <h3>Your moves</h3>
+    <ol class="moves">
+      <li><p>Install LeRobot, the open-source toolkit for teaching robots. You need Python 3.10 or newer. Then run <code>pip install lerobot</code>. The full guide is at <a href="https://huggingface.co/docs/lerobot/installation" target="_blank" rel="noopener">huggingface.co/docs/lerobot/installation</a>.</p></li>
+      <li><p>Add a simulation world to practice in: <code>pip install "lerobot[pusht]"</code>. PushT is a classic beginner task: a simulated arm pushes a T-shaped block to a target.</p></li>
+      <li><p>Follow LeRobot&rsquo;s docs to train a small policy on the PushT task. Training runs on a normal CPU, slowly, or on a free Colab GPU, faster. When it finishes, watch your trained arm push the block to the target by itself.</p></li>
+      <li><p>Real hardware is optional and comes later. When you are ready, a popular DIY robot arm kit costs around $200. You record about 50 demonstrations by moving the arm yourself, train on them, and the arm repeats the task on its own.</p></li>
+    </ol>
+
+    <h3>Done when</h3>
+    <ul class="done">
+      <li><input type="checkbox" data-id="s6a"><span>LeRobot is installed and the PushT simulation opens</span></li>
+      <li><input type="checkbox" data-id="s6b"><span>Your trained policy moved the block to the target on its own</span></li>
+      <li><input type="checkbox" data-id="s6c"><span>You can explain imitation learning in one sentence</span></li>
+    </ul>
+
+    <div class="nav"><a href="#step5">&larr; Back: give AI a planning brain</a><a class="next" href="#finale">Finish &rarr;</a></div>
   </section>
 
-  <!-- ================= FINALE ================= -->
+  <!-- ============ FINALE ============ -->
   <section class="finale" id="finale">
-    <h2>You did it. <span class="grad">Now go build.</span></h2>
+    <div class="kind" style="font-size:13px;color:var(--muted);margin-bottom:14px">The end of the walkthrough</div>
+    <h2>You did it. Now go build.</h2>
     <p>You can write code by talking to AI. You can make computers see. You can train your own models. You can run robot software. You can call AI brains from code. You can train robot policies. That is the full path from zero to physical AI.</p>
     <p>Pick one small project and build it end to end. A good first one: a robot arm in simulation that sorts objects by color. It uses every step you just finished.</p>
-    <div class="cta-row">
-      <button class="btn ghost" onclick="go('step1')">Walk it again ↑</button>
-    </div>
+    <p><a class="top" href="#step1">Walk it again &uarr;</a></p>
   </section>
 
-</div>
+  <footer class="colophon">
+    <span>Zero to Robots &middot; a beginner&rsquo;s walkthrough</span>
+    <span>Everything here is free.</span>
+  </footer>
 
-<footer>Zero to Robots · a beginner walkthrough · everything here is free</footer>
+</div>
 
 <script>
 (function(){
   var KEY = "z2r-progress-v1";
-  var chipsBox = document.getElementById("chips");
-  var pfill = document.getElementById("pfill");
-  var plabel = document.getElementById("plabel");
-  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
-
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } }
   function save(s){ try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){} }
   var state = load();
 
-  var boxes = Array.prototype.slice.call(document.querySelectorAll(".done-list input"));
-  boxes.forEach(function(b){
-    var li = b.closest("li");
-    if(state[b.dataset.id]){ b.checked = true; li.classList.add("checked"); }
-    b.addEventListener("change", function(){
-      state[b.dataset.id] = b.checked;
-      li.classList.toggle("checked", b.checked);
-      save(state); render();
-    });
-    li.addEventListener("click", function(e){
-      if(e.target !== b){ b.checked = !b.checked; b.dispatchEvent(new Event("change")); }
-    });
-  });
+  var boxes = Array.prototype.slice.call(document.querySelectorAll(".done input"));
+  var bar = document.getElementById("bar");
+  var pcount = document.getElementById("pcount");
+  document.getElementById("ptotal").textContent = boxes.length;
 
-  var chipEls = steps.map(function(s){
-    var c = document.createElement("button");
-    c.className = "chip";
-    c.innerHTML = '<span class="n">' + s.dataset.step + '</span><span>' + s.dataset.title + '</span>';
-    c.addEventListener("click", function(){ go(s.id); });
-    chipsBox.appendChild(c);
-    return c;
+  var tocLinks = {};
+  Array.prototype.forEach.call(document.querySelectorAll("#toclist a"), function(a){
+    tocLinks[a.dataset.step] = a;
   });
 
   function render(){
-    var total = boxes.length;
-    var done = boxes.filter(function(b){ return b.checked; }).length;
-    var pct = total ? Math.round(done/total*100) : 0;
-    pfill.style.width = pct + "%";
-    plabel.textContent = done + " of " + total + " tasks done";
-    steps.forEach(function(s, i){
-      var sb = Array.prototype.slice.call(s.querySelectorAll(".done-list input"));
+    var done = 0;
+    boxes.forEach(function(b){ if(b.checked) done++; });
+    bar.style.width = (boxes.length ? Math.round(done/boxes.length*100) : 0) + "%";
+    pcount.textContent = done;
+    var chapters = document.querySelectorAll(".chapter");
+    Array.prototype.forEach.call(chapters, function(ch){
+      var sb = Array.prototype.slice.call(ch.querySelectorAll(".done input"));
       var all = sb.length && sb.every(function(b){ return b.checked; });
-      chipEls[i].classList.toggle("done", !!all);
-      if(all) chipEls[i].querySelector(".n").textContent = "✓";
-      else chipEls[i].querySelector(".n").textContent = s.dataset.step;
+      var link = tocLinks[ch.dataset.step];
+      if(link) link.classList.toggle("done", !!all);
     });
   }
 
-  window.go = function(id){
-    var el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-  };
+  boxes.forEach(function(b){
+    var li = b.closest("li");
+    if(state[b.dataset.id]){ b.checked = true; li.classList.add("checked"); }
+    function onChange(){
+      state[b.dataset.id] = b.checked;
+      li.classList.toggle("checked", b.checked);
+      save(state); render();
+    }
+    b.addEventListener("change", onChange);
+    li.addEventListener("click", function(e){
+      if(e.target !== b){ b.checked = !b.checked; onChange(); }
+    });
+  });
 
   render();
 })();
