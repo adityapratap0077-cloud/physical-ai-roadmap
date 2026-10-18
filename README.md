@@ -1,18 +1,38 @@
-# From AI Coding to Real Robots
+# Zero to Robots — A Beginner Walkthrough
 
-An interactive 6-step roadmap that takes you from writing code with AI to building
-robots that see, think, and move. Written in plain language.
+Live: https://adityapratap0077-cloud.github.io/physical-ai-roadmap/
 
-**The 6 steps**
+A single-page, beginner-first walkthrough that takes someone with zero AI
+knowledge from writing their first AI-assisted code to training robot policies.
 
-1. **Coding with AI** — write code faster with Cursor, Copilot, NotebookLM
-2. **Teaching Computers to See** — computer vision basics with OpenCV and YOLO
-3. **Training Your Own AI Models** — deep learning with PyTorch and Hugging Face
-4. **Robot Software and Simulation** — ROS 2, Gazebo, MoveIt 2
-5. **AI That Plans and Reasons** — agentic AI with LangGraph and LLMs
-6. **AI on Real Robots** — edge deployment with Isaac Sim, TensorRT, LeRobot
+## What makes it a walkthrough (not just a diagram)
 
-Click any step in the diagram to see what it is, what you will learn,
-the tools you will use, and a starter project.
+- **6 ordered steps**, each with an honest time estimate
+- **"First, the words"** — every new term explained in plain language before it is used
+- **"Your moves"** — numbered, concrete actions: what to click, install, and type,
+  including copy-paste code blocks (YOLO detection, ROS 2 talker/listener test)
+- **"You are done when"** — checklists per step, saved in the browser
+  (localStorage), with a live progress bar in the sticky header
+- **Clickable step chips** + Prev/Next navigation between steps
+- Every external link verified (Cursor, Google Colab, Teachable Machine,
+  ROS 2 Jazzy docs, Google AI Studio, LeRobot install docs)
 
-**View it live:** https://adityapratap0077-cloud.github.io/physical-ai-roadmap/
+## The 6 steps
+
+1. Write code by talking to AI (Cursor, ~1 hr)
+2. Teach your computer to see (YOLO in Google Colab, ~2 hrs)
+3. Train your own AI (Teachable Machine, no code, ~1 hr)
+4. Learn robot software (ROS 2 + Gazebo simulation, a weekend)
+5. Give AI a planning brain (Gemini API + plan-and-check loop, ~2 hrs)
+6. Put AI on a robot (LeRobot PushT simulation, a weekend; real hardware optional)
+
+## Files
+
+- `walkthrough.html` — source of the page (published as `index.html`)
+- `build.py` — regenerates `index.html` from the original upload (kept for history)
+- `publish.py` — original publish helper (kept for history)
+
+## Design
+
+Same luminous design tokens as the original interactive roadmap
+(deep-space background, cyan/violet/green glow accents, glassmorphism cards).
