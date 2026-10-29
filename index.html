@@ -31,7 +31,7 @@ a:hover{color:#123aa5}
 
 /* thin progress rule */
 .progress{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
-.progress .bar{height:4px;background:var(--green);width:0%;transition:width .4s ease}
+.progress .bar{height:4px;background:var(--green);width:100%;transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
 .progress .row{max-width:700px;margin:0 auto;padding:8px 22px;display:flex;
   justify-content:space-between;font-size:13px;color:var(--muted)}
 .progress .row b{color:var(--ink)}
@@ -432,7 +432,7 @@ ros2 run demo_nodes_py listener</pre>
   function render(){
     var done = 0;
     boxes.forEach(function(b){ if(b.checked) done++; });
-    bar.style.width = (boxes.length ? Math.round(done/boxes.length*100) : 0) + "%";
+    bar.style.transform = "scaleX(" + (boxes.length ? done/boxes.length : 0) + ")";
     pcount.textContent = done;
     var chapters = document.querySelectorAll(".chapter");
     Array.prototype.forEach.call(chapters, function(ch){
