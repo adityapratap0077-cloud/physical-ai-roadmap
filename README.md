@@ -1,4 +1,4 @@
-# Zero to Robots — A Beginner Walkthrough
+# Zero to Robots: A Beginner Walkthrough
 
 Live: https://adityapratap0077-cloud.github.io/physical-ai-roadmap/
 
@@ -8,10 +8,10 @@ knowledge from writing their first AI-assisted code to training robot policies.
 ## What makes it a walkthrough (not just a diagram)
 
 - **6 ordered steps**, each with an honest time estimate
-- **"First, the words"** — every new term explained in plain language before it is used
-- **"Your moves"** — numbered, concrete actions: what to click, install, and type,
+- **"First, the words"**: every new term explained in plain language before it is used
+- **"Your moves"**: numbered, concrete actions: what to click, install, and type,
   including copy-paste code blocks (YOLO detection, ROS 2 talker/listener test)
-- **"You are done when"** — checklists per step, saved in the browser
+- **"You are done when"**: checklists per step, saved in the browser
   (localStorage), with a live progress bar in the sticky header
 - **Clickable step chips** + Prev/Next navigation between steps
 - Every external link verified (Cursor, Google Colab, Teachable Machine,
@@ -28,9 +28,9 @@ knowledge from writing their first AI-assisted code to training robot policies.
 
 ## Files
 
-- `walkthrough.html` — source of the page (published as `index.html`)
-- `build.py` — regenerates `index.html` from the original upload (kept for history)
-- `publish.py` — original publish helper (kept for history)
+- `walkthrough.html`: source of the page (published as `index.html`)
+- `build.py`: regenerates `index.html` from the original upload (kept for history)
+- `publish.py`: original publish helper (kept for history)
 
 ## Design
 
